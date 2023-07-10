@@ -1,19 +1,23 @@
 import 'package:dio/dio.dart';
+import 'package:riddles/models/models.dart';
 
 class RiddlesRespository {
-  static Future<String?> fetchRiddlesApi() async {
-    // changed return type to Future<String?>
+  static Future<List<Riddles>?> fetchRiddlesApi() async {
+    // changed return type to Future<List<Riddles>?>
     try {
-      final Response response =
+      final Response<List<dynamic>>
+          response = // changed type to Response<List<dynamic>>
           await Dio(BaseOptions()).get("https://api.api-ninjas.com/v1/riddles");
       print(response.data);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        var data = response.data; // data is a list of maps
-        for (var item in data) {
-          // loop through the list
-          var title = item['title']; // get the title from each map
-          print(title); // print the title or do something else with it
-          return item['title'];
+        final data = response.data; // added final
+        if (data != null && data.isNotEmpty) {
+          // check for null or empty data
+          return data
+              .map((riddle) => Riddles.fromJson(riddle))
+              .toList(); // changed e to riddle
+        } else {
+          return null; // return null if data is null or empty
         }
       } else {
         throw Exception();
@@ -21,6 +25,5 @@ class RiddlesRespository {
     } catch (e) {
       throw Exception();
     }
-    return "No riddles found"; // added default return value
   }
 }

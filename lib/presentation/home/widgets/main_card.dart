@@ -20,19 +20,19 @@ class MainCard extends StatelessWidget {
             ),
           );
         }
-        print(state.result ?? "nodata");
+        print(state.result?.first.title ?? "nodata");
         return Card(
           color: HexColor("#5ecc9f"),
           child: SizedBox(
             width: 400,
             height: 400,
-            child: Column(
+            child: ListView(
               children: [
                 const SizedBox(
                   height: 40,
                 ),
                 Text(
-                  state.result ?? "nodata",
+                  state.result?.first.title ?? "nodata",
                   style: GoogleFonts.chauPhilomeneOne(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -42,7 +42,7 @@ class MainCard extends StatelessWidget {
                   height: 40,
                 ),
                 Text(
-                  "what is naked in the winter and dresed at summer and keeps on repeting this pattern?",
+                  state.result?.first.question ?? "nodata",
                   style: GoogleFonts.chauPhilomeneOne(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class MainCard extends StatelessWidget {
                       width: 20,
                     ),
                     Text(
-                      "a tree",
+                      state.result?.first.answer ?? "nodata",
                       style: GoogleFonts.chauPhilomeneOne(
                         fontSize: 25,
                         fontWeight: FontWeight.w300,
